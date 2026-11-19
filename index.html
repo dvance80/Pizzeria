@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="it"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Forno Vivo — Pizzeria a Codroipo</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{--bg:#FAF6EF;--ink:#231A12;--muted:#6E6255;--line:#E2D8C4;--red:#9E2B1A;--green:#2F6B3A}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--ink);font-family:'Inter',sans-serif;font-size:16px;line-height:1.65;overflow-x:hidden}
+a{color:inherit;text-decoration:none}img{display:block;width:100%;height:auto}
+h1,h2,h3{font-family:'Playfair Display',serif;line-height:1.1}
+button{font-family:inherit;cursor:pointer;color:inherit}
+.wrap{max-width:1120px;margin:0 auto;padding:0 20px}
+@media(max-width:640px){.wrap{padding:0 16px}}
+/* BUTTERY */
+*{transition-timing-function:cubic-bezier(.22,1,.36,1)}
+.reveal{opacity:0;transform:translateY(36px);filter:blur(6px);transition:opacity .9s cubic-bezier(.22,1,.36,1),transform .9s cubic-bezier(.22,1,.36,1),filter .9s}
+.reveal.show{opacity:1;transform:none;filter:blur(0)}
+@keyframes heroZoom{from{transform:scale(1.12)}to{transform:scale(1)}}
+@keyframes heroText{from{opacity:0;transform:translateY(28px)}to{opacity:1;transform:none}}
+@keyframes slideInRight{from{opacity:0;transform:translateX(40px)}to{opacity:1;transform:none}}
+header{position:fixed;top:0;left:0;right:0;z-index:50;background:rgba(255,255,255,.92);backdrop-filter:blur(14px);border-bottom:1px solid var(--line);transition:padding .4s cubic-bezier(.22,1,.36,1),box-shadow .4s}
+header.scrolled{box-shadow:0 10px 30px rgba(0,0,0,.08)}
+.nav{max-width:1120px;margin:0 auto;padding:18px 20px;display:flex;justify-content:space-between;align-items:center;gap:12px;transition:padding .4s}
+header.scrolled .nav{padding-top:12px;padding-bottom:12px}
+.logo{font-family:'Playfair Display',serif;font-size:23px;font-weight:700;line-height:1}
+.logo span{display:block;font-family:'Inter',sans-serif;font-size:11px;color:var(--muted);margin-top:2px}
+.nav-links{display:flex;gap:26px;font-size:14px;font-weight:500}
+@media(max-width:820px){.nav-links{display:none}}
+.nav-links a{position:relative}
+.nav-links a:after{content:"";position:absolute;left:0;bottom:-4px;width:0;height:2px;background:var(--red);transition:width .45s cubic-bezier(.22,1,.36,1)}
+.nav-links a:hover:after{width:100%}
+.cart-btn{background:var(--ink);color:#fff;border:0;padding:11px 16px;border-radius:100px;font-weight:600;font-size:14px;transition:transform .3s,background .3s}
+.cart-btn:hover{transform:translateY(-2px)}
+/* HERO SLIDER */
+.hero{position:relative;height:88vh;min-height:560px;overflow:hidden;margin-top:64px}
+@media(max-width:760px){.hero{height:82vh;min-height:520px}}
+.hero-slide{position:absolute;inset:0;opacity:0;transition:opacity 1.2s cubic-bezier(.22,1,.36,1)}
+.hero-slide.active{opacity:1}
+.hero-slide img{width:100%;height:100%;object-fit:cover;animation:heroZoom 6s cubic-bezier(.22,1,.36,1) both}
+.hero-slide.active img{animation:heroZoom 6s cubic-bezier(.22,1,.36,1) both}
+.hero-overlay{position:absolute;inset:0;background:linear-gradient(to bottom,rgba(0,0,0,.35),rgba(0,0,0,.55))}
+.hero-content{position:absolute;inset:0;display:flex;align-items:center;z-index:2}
+.hero-content-inner{max-width:1120px;margin:0 auto;padding:0 20px;width:100%;color:#fff}
+.hero-content-inner h1{font-size:clamp(40px,6vw,68px);animation:heroText .9s cubic-bezier(.22,1,.36,1) both}
+.hero-content-inner p{margin-top:14px;max-width:52ch;opacity:.9;animation:heroText .9s .15s cubic-bezier(.22,1,.36,1) both}
+.hero-actions{display:flex;gap:10px;margin-top:22px;flex-wrap:wrap;animation:heroText .9s .3s cubic-bezier(.22,1,.36,1) both}
+@media(max-width:640px){.hero-actions{flex-direction:column}.hero-actions button,.hero-actions a{width:100%;text-align:center}}
+.btn{padding:15px 26px;border-radius:100px;font-weight:700;border:0;font-size:15px;display:inline-block;text-align:center;transition:transform .35s cubic-bezier(.22,1,.36,1),box-shadow .35s}
+.btn:hover{transform:translateY(-3px) scale(1.02)}
+.btn-red{background:var(--red);color:#fff}
+.btn-white{background:#fff;color:#111}
+.hero-dots{position:absolute;bottom:22px;left:50%;transform:translateX(-50%);display:flex;gap:8px;z-index:3}
+.hero-dot{width:8px;height:8px;border-radius:100px;background:rgba(255,255,255,.5);border:0;transition:width .5s cubic-bezier(.22,1,.36,1),background .5s;cursor:pointer}
+.hero-dot.active{width:28px;background:#fff}
+.hero-badge{position:absolute;right:20px;bottom:70px;z-index:3;background:#fff;color:#111;padding:12px 16px;border-radius:12px;display:flex;gap:12px;align-items:center;animation:slideInRight .9s .4s cubic-bezier(.22,1,.36,1) both}
+@media(max-width:640px){.hero-badge{display:none}}
+section{padding:52px 0}
+h2{font-size:34px}@media(max-width:640px){h2{font-size:28px}}
+.lead{color:var(--muted);margin-top:10px;max-width:62ch}
+/* TABS SLIDING */
+.tabs{position:relative;display:inline-flex;background:#EFE9DC;padding:5px;border-radius:100px;margin-top:20px}
+.tabs button{position:relative;z-index:2;border:0;background:transparent;padding:11px 20px;border-radius:100px;font-weight:700;font-size:14px;transition:color .35s}
+.tabs button.active{color:#fff}
+.tabs-pill{position:absolute;top:5px;bottom:5px;border-radius:100px;background:var(--ink);transition:left .5s cubic-bezier(.22,1,.36,1),width .5s cubic-bezier(.22,1,.36,1);z-index:1}
+.menu{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:22px}
+@media(max-width:760px){.menu{grid-template-columns:1fr}}
+.card{background:#fff;border:1px solid var(--line);border-radius:16px;overflow:hidden;display:flex;transition:transform .5s cubic-bezier(.22,1,.36,1),box-shadow .5s}
+.card:hover{transform:translateY(-6px);box-shadow:0 22px 40px rgba(0,0,0,.12)}
+.card img{width:150px;min-width:150px;min-height:170px;object-fit:cover;transition:transform .8s cubic-bezier(.22,1,.36,1)}
+.card:hover img{transform:scale(1.08)}
+@media(max-width:480px){.card img{width:110px;min-width:110px}}
+.card-body{padding:16px;display:flex;flex-direction:column;flex:1;min-width:0}
+.card-body h3{font-size:19px}.card-body p{font-size:14px;color:var(--muted);margin-top:6px}
+.card-body small{font-size:12.5px;color:var(--red);font-weight:700;margin-top:8px}
+.card-foot{margin-top:auto;padding-top:11px;display:flex;justify-content:space-between;align-items:center;border-top:1px solid var(--line);margin-top:11px}
+.card-foot b{font-family:'Playfair Display',serif;font-size:19px}
+.card-foot button{background:var(--ink);color:#fff;border:0;padding:9px 14px;border-radius:100px;font-weight:600;font-size:13px;transition:transform .3s,background .3s}
+.card-foot button:hover{transform:scale(1.05);background:var(--red)}
+.builder{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-top:20px;align-items:start}
+@media(max-width:860px){.builder{grid-template-columns:1fr}}
+.builder-card{background:#fff;border:1px solid var(--line);border-radius:16px;padding:20px}
+.builder-card h3{font-size:18px;margin:16px 0 8px}.builder-card h3:first-child{margin-top:0}
+.chip-row{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
+.chip{border:1px solid var(--line);background:#fff;padding:11px 16px;border-radius:100px;font-weight:600;font-size:14px;transition:.35s cubic-bezier(.22,1,.36,1)}
+.chip.active{background:var(--ink);color:#fff;transform:scale(1.03)}
+.chip2{border:1px solid var(--line);background:#fff;padding:9px 14px;border-radius:100px;font-size:13px;transition:.35s}
+.chip2.active{background:var(--red);color:#fff;border-color:var(--red)}
+.summary{background:var(--ink);color:#fff;border-radius:16px;overflow:hidden;position:sticky;top:90px}
+@media(max-width:860px){.summary{position:static}}
+.summary img{height:180px;object-fit:cover;transition:transform .8s}
+.summary:hover img{transform:scale(1.04)}
+.summary-body{padding:18px}
+.summary-list{margin-top:10px;border-top:1px solid rgba(255,255,255,.2);padding-top:10px}
+.summary-list div{display:flex;justify-content:space-between;font-size:14px;padding:5px 0;transition:opacity .3s}
+.summary-total{display:flex;justify-content:space-between;align-items:center;background:#fff;color:#111;padding:12px 14px;border-radius:10px;margin-top:12px}
+.summary-total b{font-family:'Playfair Display',serif;font-size:22px}
+.summary-body button{width:100%;margin-top:12px;background:var(--red);color:#fff;border:0;padding:14px;border-radius:100px;font-weight:700;transition:transform .3s}
+.summary-body button:hover{transform:translateY(-2px)}
+.how{display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px;margin-top:20px}
+@media(max-width:760px){.how{grid-template-columns:1fr}}
+.how div{background:#fff;border:1px solid var(--line);border-radius:14px;padding:20px;transition:transform .5s cubic-bezier(.22,1,.36,1)}
+.how div:hover{transform:translateY(-5px)}
+.how span{font-family:'Playfair Display',serif;font-size:28px;color:var(--red)}
+.reviews{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:20px}
+@media(max-width:760px){.reviews{grid-template-columns:1fr}}
+.review{background:#fff;border:1px solid var(--line);border-radius:14px;padding:20px;transition:transform .5s}
+.review:hover{transform:translateY(-4px)}
+.review p{font-family:'Playfair Display',serif;font-size:18px;line-height:1.4;margin:10px 0}
+.order{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:20px;align-items:start}
+@media(max-width:860px){.order{grid-template-columns:1fr}}
+.order-box{background:#fff;border:1px solid var(--line);border-radius:14px;padding:20px}
+.order-box img{height:150px;object-fit:cover;border-radius:10px;margin:12px 0}
+.order-box ul{list-style:none}.order-box li{padding:10px 0;border-bottom:1px solid var(--line);display:flex;justify-content:space-between;font-size:14px}
+.form label{display:block;font-size:12px;font-weight:600;text-transform:uppercase;color:var(--muted);margin:12px 0 6px}.form label:first-child{margin-top:0}
+.form input{width:100%;padding:13px;border:1px solid var(--line);border-radius:8px;font-size:15px;transition:border-color .3s,box-shadow .3s}
+.form input:focus{outline:none;border-color:var(--ink);box-shadow:0 0 0 3px rgba(0,0,0,.06)}
+.form button{width:100%;margin-top:14px;background:var(--ink);color:#fff;border:0;padding:14px;border-radius:100px;font-weight:700;transition:transform .3s}
+.form button:hover{transform:translateY(-2px)}
+footer{padding:26px 0 110px;border-top:1px solid var(--line)}.foot{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap}.foot p{font-size:13px;color:var(--muted)}
+.sticky{position:fixed;left:50%;transform:translateX(-50%) translateY(140%);bottom:12px;z-index:60;background:var(--ink);color:#fff;border-radius:12px;display:flex;align-items:center;justify-content:space-between;gap:12px;box-shadow:0 16px 32px rgba(0,0,0,.25);transition:transform .55s cubic-bezier(.22,1,.36,1);width:calc(100% - 32px);max-width:520px;padding:12px 12px 12px 16px}
+.sticky.show{transform:translateX(-50%) translateY(0)}
+.sticky-text{flex:1;min-width:0}.sticky-text b{font-size:14px;display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.sticky-text span{font-size:12px;opacity:.7}
+.sticky button{background:#fff;color:#111;border:0;padding:11px 16px;border-radius:8px;font-weight:700;white-space:nowrap}
+.overlay{position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:70;display:none;opacity:0;transition:opacity .4s}.overlay.open{display:block;opacity:1}
+.cart{position:fixed;top:0;right:0;bottom:0;width:430px;max-width:94vw;background:#fff;z-index:80;transform:translateX(100%);transition:transform .6s cubic-bezier(.22,1,.36,1);display:flex;flex-direction:column}
+.cart.open{transform:none}
+.cart-head{padding:18px;display:flex;justify-content:space-between;border-bottom:1px solid var(--line)}.cart-head button{border:0;background:none;font-size:22px}
+.cart-items{flex:1;overflow:auto;padding:14px;display:flex;flex-direction:column;gap:11px}
+.cart-item{display:flex;gap:11px;border:1px solid var(--line);border-radius:10px;padding:11px;align-items:center;animation:heroText .5s cubic-bezier(.22,1,.36,1) both}
+.cart-item img{width:58px;height:58px;object-fit:cover;border-radius:8px}
+.cart-item b{font-size:14px;display:block}.cart-item small{font-size:12px;color:var(--muted)}
+.qty{display:flex;gap:8px;align-items:center;margin-left:auto}.qty button{width:30px;height:30px;border:1px solid var(--line);background:#fff;border-radius:50%;font-weight:800;transition:transform .2s}.qty button:active{transform:scale(.9)}
+.cart-foot{padding:16px;border-top:1px solid var(--line)}.cart-foot .row{display:flex;justify-content:space-between;font-size:14px;padding:4px 0}.cart-foot .total{font-weight:800;font-size:18px;border-top:1px solid var(--line);margin-top:8px;padding-top:10px}.cart-foot button{width:100%;margin-top:12px}.cart-foot .wa{background:var(--green);color:#fff;border:0;padding:14px;border-radius:100px;font-weight:700}.cart-foot .clear{background:none;border:0;color:#888;font-size:12px;margin-top:8px;width:100%}
+</style></head><body>
+<header id="header"><div class="nav"><a class="logo" href="#">Forno Vivo<span>Via Roma 12, Codroipo — dal 1998</span></a><div class="nav-links"><a href="#menu">Menù</a><a href="#crea">Crea la tua</a><a href="#ordina">Ordina</a></div><button class="cart-btn" onclick="openCart()">Carrello <b id="cartCount">0</b></button></div></header>
+<div class="hero">
+  <div class="hero-slide active"><img src="https://images.unsplash.com/photo-1513104890138-7c749659a591?w=1600&q=80" alt=""><div class="hero-overlay"></div></div>
+  <div class="hero-slide"><img src="https://images.unsplash.com/photo-1574071318508-1cdbab80d002?w=1600&q=80" alt=""><div class="hero-overlay"></div></div>
+  <div class="hero-slide"><img src="https://images.unsplash.com/photo-1604382354936-07c5d9983bd3?w=1600&q=80" alt=""><div class="hero-overlay"></div></div>
+  <div class="hero-content"><div class="hero-content-inner"><h1 id="heroTitle">Pizza al forno a legna,<br>pronta in 20 minuti.</h1><p>Dal 1998 a Codroipo. Impasto 48 ore, forno a legna. Ordina online, ritiri calda. Paghi al ritiro.</p><div class="hero-actions"><button class="btn btn-red" onclick="document.getElementById('menu').scrollIntoView({behavior:'smooth'})">Ordina ora</button><a class="btn btn-white" href="#menu">Vedi il menù</a></div></div></div>
+  <div class="hero-badge"><div><b>Oggi: Margherita + Bibita</b><span style="font-size:12px;color:#666">Solo online</span></div><strong>€8,90</strong></div>
+  <div class="hero-dots"><button class="hero-dot active" onclick="goSlide(0)"></button><button class="hero-dot" onclick="goSlide(1)"></button><button class="hero-dot" onclick="goSlide(2)"></button></div>
+</div>
+<main class="wrap">
+<section id="menu" class="reveal"><h2>Il menù</h2><p class="lead">Le nostre pizze, come sul menù di carta. Tocca una categoria, la pill scivola.</p><div class="tabs" id="tabs"><div class="tabs-pill" id="pill"></div><button class="active" onclick="filterMenu('all',this)">Tutte</button><button onclick="filterMenu('piu',this)">Più ordinate</button><button onclick="filterMenu('classiche',this)">Classiche</button><button onclick="filterMenu('speciali',this)">Speciali</button></div><div class="menu" id="menuGrid"></div></section>
+<section id="crea" class="reveal"><h2>Crea la tua pizza</h2><p class="lead">Tre domande, in italiano. Il prezzo scivola e si aggiorna subito.</p><div class="builder"><div class="builder-card"><h3>1. Quanto è grande?</h3><div class="chip-row"><button class="chip" onclick="setSize('Piccola',7,this)">Piccola — €7</button><button class="chip active" onclick="setSize('Normale',9,this)">Normale — €9</button><button class="chip" onclick="setSize('Grande',11,this)">Grande — €11</button></div><h3>2. Con pomodoro o senza?</h3><div class="chip-row"><button class="chip active" onclick="setBase('Con pomodoro',this)">Con pomodoro</button><button class="chip" onclick="setBase('Senza pomodoro',this)">Senza pomodoro</button></div><h3>3. Cosa ci metti sopra?</h3><div class="chip-row" id="toppings"></div></div><div class="summary"><img src="https://images.unsplash.com/photo-1574071318508-1cdbab80d002?w=900&q=80" alt=""><div class="summary-body"><h3 id="previewTitle">Normale • Con pomodoro</h3><p id="previewDesc" style="font-size:13px;opacity:.8">Mozzarella. Pronta in 20 minuti.</p><div class="summary-list" id="previewList"></div><div class="summary-total"><span>Paghi al ritiro</span><b id="previewTotal">€9</b></div><button onclick="addCustom()">Aggiungi al carrello</button></div></div></div></section>
+<section class="reveal"><h2>Come funziona</h2><div class="how"><div><span>1</span><br><b>Scegli la pizza</b><p style="color:var(--muted);font-size:14px">Dal menù, in un minuto. Senza account, senza app.</p></div><div><span>2</span><br><b>Invia l’ordine</b><p style="color:var(--muted);font-size:14px">Su WhatsApp, già scritto. Ti confermiamo noi.</p></div><div><span>3</span><br><b>Ritiri in 20 minuti</b><p style="color:var(--muted);font-size:14px">Via Roma 12, Codroipo. Paghi al ritiro.</p></div></div></section>
+<section class="reveal"><h2>Cosa dicono</h2><div class="reviews"><div class="review"><div>★★★★★</div><p>“Ordinato alle 19:12, alle 19:32 ero a tavola. La pizza era ancora calda.”</p><small><b>Marco R.</b> — Codroipo</small></div><div class="review"><div>★★★★★</div><p>“La bufala, crudo e rucola è la mia preferita. La prendo ogni venerdì.”</p><small><b>Giulia</b> — Codroipo</small></div></div></section>
+<section id="ordina" class="reveal"><h2>Ordina per stasera</h2><div class="order"><div class="order-box"><h3>Forno Vivo — Codroipo</h3><p style="color:var(--muted);font-size:14px">Pizzeria d’asporto. Ritiri e mangi a casa.</p><img src="https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=900&q=80" alt=""><ul><li><span>Via</span><b>Via Roma 12, Codroipo</b></li><li><span>Orari</span><b>Mar — Dom, 17:30 — 22:30</b></li><li><span>Telefono</span><b>+39 333 000 0000</b></li><li><span>Pagamento</span><b>Al ritiro</b></li></ul></div><div class="order-box form"><label>Il tuo nome</label><input id="ordNome" type="text" placeholder="Es. Marco"><label>Telefono</label><input id="ordTel" type="tel" placeholder="+39 333 000 0000"><label>Quando la vuoi?</label><div class="chip-row" id="oraChips"><button type="button" class="chip active" onclick="setOra(this,'Appena pronta')">Appena pronta — 20 min</button><button type="button" class="chip" onclick="setOra(this,'19:00')">19:00</button><button type="button" class="chip" onclick="setOra(this,'20:00')">20:00</button><button type="button" class="chip" onclick="setOra(this,'21:00')">21:00</button></div><input type="hidden" id="ordOra" value="Appena pronta"><label>Note — facoltativo</label><input id="ordNote" type="text" placeholder="Es. Ben cotta"><button onclick="quickOrder()">Richiedi ritiro</button><p id="ordMsg" style="font-size:13px;color:#2F6B3A;font-weight:600;margin:10px 0 0;display:none"></p></div></div></section>
+</main>
+<footer class="wrap"><div class="foot"><div><p><b>Forno Vivo</b><br>Via Roma 12, Codroipo (UD)<br>Mar — Dom • 17:30 — 22:30</p></div><div><p><b>Ordini</b><br>WhatsApp: +39 333 000 0000<br>Instagram: @fornovivo.codroipo</p></div><div><p>© 2026 Forno Vivo</p></div></div></footer>
+<div class="sticky" id="stickyBar"><div class="sticky-text"><b id="stickyText">0 articoli • €0</b><span>Ritiro a Codroipo • 20 min</span></div><button onclick="openCart()">Vedi carrello</button></div>
+<div class="overlay" id="overlay" onclick="closeCart()"></div><div class="cart" id="cart"><div class="cart-head"><h3>Il tuo ordine</h3><button onclick="closeCart()">✕</button></div><div class="cart-items" id="cartItems"></div><div class="cart-foot"><div class="row"><span>Subtotale</span><b id="cartSub">€0</b></div><div class="row"><span>Ritiro</span><b>Gratis</b></div><div class="row total"><span>Totale</span><b id="cartTotal">€0</b></div><button class="wa" onclick="sendWhatsApp()">Invia ordine su WhatsApp</button><button class="clear" onclick="clearCart()">Svuota carrello</button></div></div>
+<script>
+let slideIdx=0;const slides=document.querySelectorAll('.hero-slide');const dots=document.querySelectorAll('.hero-dot');const titles=["Pizza al forno a legna,<br>pronta in 20 minuti.","Impasto 48 ore.<br>Forno a legna, dal 1998.","La più ordinata:<br>Bufala, crudo e rucola."];
+function goSlide(n){slideIdx=n;slides.forEach((s,i)=>s.classList.toggle('active',i===n));dots.forEach((d,i)=>d.classList.toggle('active',i===n));document.getElementById('heroTitle').innerHTML=titles[n];}
+setInterval(()=>{goSlide((slideIdx+1)%slides.length)},5000);
+const MENU=[{n:'Margherita',d:'Pomodoro San Marzano, mozzarella, basilico.',tag:'La classica dal 1998',p:9,c:'classiche',img:'https://images.unsplash.com/photo-1574071318508-1cdbab80d002?w=600&q=80',pop:true},{n:'Diavola',d:'Pomodoro, mozzarella, salame piccante, miele.',tag:'Piccante',p:11,c:'classiche',img:'https://images.unsplash.com/photo-1628840042765-356cda07504e?w=600&q=80',pop:true},{n:'Bufala, Crudo e Rucola',d:'Bufala, crudo 18 mesi, rucola, pomodorini.',tag:'La più ordinata',p:14,c:'speciali',img:'https://images.unsplash.com/photo-1513104890138-7c749659a591?w=600&q=80',pop:true},{n:'Quattro Formaggi',d:'Mozzarella, gorgonzola, fontina, parmigiano.',tag:'Bianca',p:12,c:'classiche',img:'https://images.unsplash.com/photo-1590947132387-155cc02f3212?w=600&q=80',pop:false},{n:'Ortolana',d:'Pomodoro, mozzarella, verdure grigliate.',tag:'Vegetariana',p:10,c:'classiche',img:'https://images.unsplash.com/photo-1571407970349-bc81e7e96d47?w=600&q=80',pop:false},{n:'Salsiccia e Funghi',d:'Pomodoro, mozzarella, salsiccia, funghi.',tag:'Classica',p:11,c:'classiche',img:'https://images.unsplash.com/photo-1604382354936-07c5d9983bd3?w=600&q=80',pop:false}];
+const TOPPINGS=[{n:'Mozzarella',p:0,d:'Inclusa'},{n:'Bufala',p:3,d:'+ €3'},{n:'Prosciutto crudo',p:2,d:'+ €2'},{n:'Salsiccia',p:2,d:'+ €2'},{n:'Funghi',p:1,d:'+ €1'},{n:'Rucola',p:1,d:'+ €1'}];
+let curSize='Normale',curSizePrice=9,curBase='Con pomodoro',selected=new Set(['Mozzarella']);let cart=[];let curOra='Appena pronta';let currentFilter='all';
+function movePill(btn){const pill=document.getElementById('pill');pill.style.left=btn.offsetLeft+'px';pill.style.width=btn.offsetWidth+'px';}
+function renderMenu(){let list=MENU.filter(m=>currentFilter==='all'?true:currentFilter==='piu'?m.pop:m.c===currentFilter);document.getElementById('menuGrid').innerHTML=list.map(m=>`<div class="card"><img src="${m.img}" alt="${m.n}"><div class="card-body"><h3>${m.n}</h3><p>${m.d}</p><small>${m.tag}</small><div class="card-foot"><b>€${m.p}</b><button onclick="addItem('${m.n}',${m.p},'${m.img}')">Aggiungi</button></div></div></div>`).join('');}
+function filterMenu(f,elm){currentFilter=f;document.querySelectorAll('.tabs button').forEach(e=>e.classList.remove('active'));if(elm){elm.classList.add('active');movePill(elm);}renderMenu();}
+renderMenu();setTimeout(()=>{const b=document.querySelector('.tabs button.active');if(b)movePill(b)},100);window.addEventListener('resize',()=>{const b=document.querySelector('.tabs button.active');if(b)movePill(b)});
+function renderToppings(){document.getElementById('toppings').innerHTML=TOPPINGS.map(t=>`<button class="chip2 ${selected.has(t.n)?'active':''}" onclick="toggleTop('${t.n}')">${t.n} ${t.d}</button>`).join('');}
+function toggleTop(n){if(selected.has(n))selected.delete(n);else selected.add(n);renderToppings();updatePreview();}
+function setSize(s,p,elm){curSize=s;curSizePrice=p;document.querySelectorAll('.builder-card .chip-row .chip').forEach(e=>{if(e.textContent.includes('Piccola')||e.textContent.includes('Normale')||e.textContent.includes('Grande'))e.classList.remove('active')});elm.classList.add('active');updatePreview();}
+function setBase(b,elm){curBase=b;document.querySelectorAll('.builder-card .chip-row .chip').forEach(e=>{if(e.textContent.includes('pomodoro'))e.classList.remove('active')});elm.classList.add('active');updatePreview();}
+function calcCustom(){let total=curSizePrice;let lines=[{n:`${curSize} • ${curBase}`,p:curSizePrice}];TOPPINGS.forEach(t=>{if(selected.has(t.n)&&t.p>0){total+=t.p;lines.push({n:t.n,p:t.p})}});if(selected.has('Mozzarella'))lines.push({n:'Mozzarella inclusa',p:0});return{total,lines};}
+function updatePreview(){const{total,lines}=calcCustom();document.getElementById('previewTitle').textContent=`${curSize} • ${curBase}`;document.getElementById('previewDesc').textContent=`${Array.from(selected).join(', ')}. Pronta in 20 minuti.`;document.getElementById('previewList').innerHTML=lines.map(l=>`<div><span>${l.n}</span><b>${l.p===0?'Inclusa':'€'+l.p}</b></div>`).join('');document.getElementById('previewTotal').textContent='€'+total;}
+function addCustom(){const{total}=calcCustom();addItem(`Pizza ${curSize} • ${curBase} + ${Array.from(selected).join(', ')}`,total,'https://images.unsplash.com/photo-1574071318508-1cdbab80d002?w=400&q=80');}
+renderToppings();updatePreview();
+function addItem(name,price,img){const f=cart.find(i=>i.name===name);if(f)f.qty++;else cart.push({name,price,img,qty:1});renderCart();}
+function renderCart(){const wrap=document.getElementById('cartItems');const count=cart.reduce((a,i)=>a+i.qty,0);document.getElementById('cartCount').textContent=count;if(!cart.length){wrap.innerHTML=`<div style="text-align:center;color:#6E6255;padding:36px">Carrello vuoto.<br>Aggiungi una pizza dal menù.</div>`}else{wrap.innerHTML=cart.map((it,idx)=>`<div class="cart-item"><img src="${it.img}"><div style="flex:1"><b>${it.name}</b><small>€${it.price} cad.</small></div><div class="qty"><button onclick="changeQty(${idx},-1)">−</button><b>${it.qty}</b><button onclick="changeQty(${idx},1)">+</button></div><b>€${(it.price*it.qty).toFixed(2).replace('.',',')}</b></div>`).join('');}const sub=cart.reduce((a,i)=>a+i.price*i.qty,0);document.getElementById('cartSub').textContent='€'+sub.toFixed(2).replace('.',',');document.getElementById('cartTotal').textContent='€'+sub.toFixed(2).replace('.',',');document.getElementById('stickyText').textContent=`${count} articoli • €${sub.toFixed(2).replace('.',',')}`;document.getElementById('stickyBar').classList.toggle('show',count>0);}
+function changeQty(idx,d){cart[idx].qty+=d;if(cart[idx].qty<=0)cart.splice(idx,1);renderCart();}
+function clearCart(){cart=[];renderCart();}
+function openCart(){document.getElementById('cart').classList.add('open');document.getElementById('overlay').classList.add('open')}
+function closeCart(){document.getElementById('cart').classList.remove('open');document.getElementById('overlay').classList.remove('open')}
+function setOra(elm,val){curOra=val;document.querySelectorAll('#oraChips .chip').forEach(c=>c.classList.remove('active'));elm.classList.add('active');document.getElementById('ordOra').value=val;}
+function quickOrder(){const n=document.getElementById('ordNome').value||'Cliente';document.getElementById('ordMsg').style.display='block';document.getElementById('ordMsg').textContent=`Grazie ${n}. Richiesta per ritiro ${curOra}. Ti confermiamo su WhatsApp.`;}
+function sendWhatsApp(){if(!cart.length){alert('Carrello vuoto — aggiungi una pizza prima!');return}let txt='Ciao Forno Vivo! Vorrei ordinare (asporto Codroipo):\n';cart.forEach(i=>{txt+=`• ${i.qty}x ${i.name} — €${(i.price*i.qty).toFixed(2)}\n`});const total=cart.reduce((a,i)=>a+i.price*i.qty,0);txt+=`Totale: €${total.toFixed(2)}\nOrario: ${curOra}\nNome: ${document.getElementById('ordNome').value||''}`;window.open('https://wa.me/393330000000?text='+encodeURIComponent(txt),'_blank');}
+const obs=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting)e.target.classList.add('show')}),{threshold:.12});document.querySelectorAll('.reveal').forEach(el=>obs.observe(el));
+window.addEventListener('scroll',()=>{document.getElementById('header').classList.toggle('scrolled',window.scrollY>20);});
+renderCart();
+</script></body></html>
